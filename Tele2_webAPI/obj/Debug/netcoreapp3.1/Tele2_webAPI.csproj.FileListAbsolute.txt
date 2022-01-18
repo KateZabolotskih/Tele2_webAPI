@@ -47,3 +47,5 @@ C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\xun
 C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\xunit.assert.dll
 C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\xunit.core.dll
 C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\xunit.execution.dotnet.dll
+C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\Kate\source\repos\Tele2_webAPI\Tele2_webAPI\bin\Debug\netcoreapp3.1\Moq.dll

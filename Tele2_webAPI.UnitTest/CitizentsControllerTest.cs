@@ -8,8 +8,6 @@ using Tele2_webAPI.Controllers;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Json.Net;
-using Newtonsoft.Json;
 
 namespace Tele2_webAPI.UnitTest
 {
@@ -20,13 +18,34 @@ namespace Tele2_webAPI.UnitTest
         {
             cfg.AddProfile(new CitizentsProfile());
         });
-        private IMapper mapper = mockMapper.CreateMapper();
+        private IMapper mapper = new Mapper(mockMapper);
 
         [Fact]
-        public void GetAllResidents_SexMale()
+        public void GetAllResidents_WithNoParams_RetursNotFound()
         {
-            
+            repositoryStub.Setup(repo => repo.GetCitizens()).Returns((List<Citizen>)null);
+
+            var controller = new CitizensController(repositoryStub.Object, mapper);
+
+            var result = controller.GetAllResidents();
+
+            Assert.IsType<NotFoundResult>(result.Result);
         }
+
+        [Fact]
+        public void GetAllResidents_WithNoParams_RetursOk()
+        {
+            var expectedItem = this.GetAllCitizents();
+
+            repositoryStub.Setup(repo => repo.GetCitizens()).Returns(expectedItem);
+
+            var controller = new CitizensController(repositoryStub.Object, mapper);
+
+            var result = controller.GetAllResidents();
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
         [Fact]
         public void GetResidentById_WithUnexistingItem_RetursNotFound()
         {
@@ -39,10 +58,10 @@ namespace Tele2_webAPI.UnitTest
             Assert.IsType<NotFoundResult>(result.Result);
         }
         [Fact]
-        public void GetResidentById_WithExistingItem_RetursNotFound()
+        public void GetResidentById_WithExistingItem_RetursOk()
         {
             var expectedItem = new Citizen() { Id = "id1", Name = "Kate", Age = 23, Index = 1, Sex = "female" };
-            var dataString = JsonConvert.SerializeObject(expectedItem);
+
             repositoryStub.Setup(repo => repo.GetCitizentById(It.IsAny<string>())).Returns(expectedItem);
 
             var controller = new CitizensController(repositoryStub.Object, mapper);

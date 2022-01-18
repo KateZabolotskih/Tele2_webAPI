@@ -27,9 +27,22 @@ namespace Tele2_webAPI.Controllers
         [HttpGet("{sex?}/{lowerAgeLimit?}/{upperAgeLimit?}/{pageNumber?}/{pageSize?}")]
         public ActionResult<IEnumerable<CitizenReadDto>> GetAllResidents([FromQuery] string sex=null, [FromQuery] int lowAge=-1, [FromQuery] int upAge=-1, [FromQuery] int pageNum=-1, [FromQuery] int pageSize=-1)
         {
-            var residents = _repository.GetCitizensByParams(sex, lowAge, upAge, pageNum, pageSize);
+            IEnumerable<Citizen> citizens;
+
+            if (sex==null && lowAge == -1 && upAge == -1 && pageNum == -1 && pageSize ==-1)
+            {
+                citizens = _repository.GetCitizens();
+            }
+            else
+            {
+                citizens = _repository.GetCitizensByParams(sex, lowAge, upAge, pageNum, pageSize);
+            }
             
-            return Ok(_mapper.Map<IEnumerable<CitizenReadDto>>(residents));
+            if (citizens != null)
+            {
+                return Ok(_mapper.Map<List<CitizenReadDto>>(citizens));
+            }
+            return NotFound();
         }
 
 

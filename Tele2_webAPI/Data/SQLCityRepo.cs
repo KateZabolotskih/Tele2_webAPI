@@ -8,11 +8,11 @@ using System.Text.Json;
 
 namespace Tele2_webAPI.Data
 {
-    public class SQLCityRepo : ICityRepo
+    public class CacheProfile : ICityRepo
     {
         private readonly CityContext _context;
 
-        public SQLCityRepo(CityContext context)
+        public CacheProfile(CityContext context)
         {
             _context = context;
         }
@@ -24,21 +24,27 @@ namespace Tele2_webAPI.Data
 
         public IEnumerable<Citizen> GetCitizensByParams(string sex = null, int lowAge = -1, int upAge = -1, int pageNum = -1, int pageSize = -1)
         {
-            IQueryable<Citizen> query = _context.City.AsQueryable();
-            
-            query = query.Where(c => (c.Age >= lowAge || lowAge == -1) && 
-                                             (c.Age <= upAge || upAge == -1) &&
-                                             (c.Sex == sex || sex == null));
+            IQueryable<Citizen> query;
 
-            if (pageNum != -1 && pageSize != -1)
+            if (sex == null && lowAge == -1 && upAge == -1  && pageNum == -1 && pageSize == -1)
             {
-                query = query.Skip((pageNum - 1) * pageSize).Take(pageSize);
-            }
-            var citizents = query.ToArray();
-            if (citizents.Length == 0)
                 return _context.City.ToList();
+            }
+            else
+            {
+                query = _context.City.AsQueryable();
 
-            return citizents;
+                query = query.Where(c => (c.Age >= lowAge || lowAge == -1) &&
+                                                 (c.Age <= upAge || upAge == -1) &&
+                                                 (c.Sex == sex || sex == null));
+
+                if (pageNum != -1 && pageSize != -1)
+                {
+                    query = query.Skip((pageNum - 1) * pageSize).Take(pageSize);
+                }
+            }
+
+            return query.ToArray(); ;
         }
 
         public Citizen GetCitizentById(string id)

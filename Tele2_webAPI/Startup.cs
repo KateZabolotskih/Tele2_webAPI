@@ -35,7 +35,7 @@ namespace Tele2_webAPI
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<ICityRepo, SQLCityRepo>();
+            services.AddScoped<ICityRepo, Data.CacheProfile>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
