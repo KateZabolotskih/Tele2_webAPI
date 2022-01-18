@@ -15,7 +15,7 @@
 Покрыть реализвацию unit тестами.
 
 ## Реализация
-
+Был реализован web API проект на ASP.NET core 3.1 фреймворке.
 ### Список используемых библиотек:
 
 - AutoMapper.Extensions.Microsoft.Dependencyinjection\3.2.0\
