@@ -25,5 +25,14 @@
 - xunit.core\2.4.1\
 - linq
 
+Основная абстракция модели данных - класс "Citizen", которая соответсвует сущности "житель" в контексте задачи (папка "Models").
+Для работы с данными был создан интерфейс "ICityRepo". Его имплементирует "SQLCityRepo". Также в реализации применялась конвертация сущности в DTO. В папке "Dtos" хранится "CitizenReadDto". Маппинг производился с помощью библиотеки AutoMapper.
+
+Был реализован контроллер "CitizensController".
+#### Доступные методы:
+- GetAllResidents()
+
+- GetResidentById()
+
 Для подключения своего MsSQL Server в appsettings.json измените "CityConnection" string. Затем в Консоли деспетчера пакетов введите Update-Database. 
 Файлы миграций лежат в папке Migrations.
